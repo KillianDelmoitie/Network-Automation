@@ -1,9 +1,0 @@
----
-- name: Get ansible facts
-  hosts: switches
-  gather_facts: no
-  tasks:
-    - name: Display facts
-      cisco.ios.ios_facts:
-      when: ansible_network_os == 'cisco.ios.ios'
-        
