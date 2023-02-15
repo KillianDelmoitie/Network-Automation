@@ -1,0 +1,13 @@
+hostname ISP
+
+spanning-tree mode pvst
+
+interface Serial0/0/0
+ ip address 209.165.200.226 255.255.255.224
+ clock rate 2000000
+!
+
+ip classless
+ip route 0.0.0.0 0.0.0.0 Serial0/0/0 
+!
+ip flow-export version 9

@@ -1,0 +1,46 @@
+
+
+hostname Masterswitch
+
+enable secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
+
+spanning-tree mode pvst
+
+interface FastEthernet0/19
+ switchport trunk allowed vlan 8,10,99
+ switchport mode trunk
+!
+interface FastEthernet0/20
+ switchport trunk allowed vlan 8,10,99
+ switchport mode trunk
+!
+interface FastEthernet0/21
+ switchport trunk allowed vlan 8,10,99
+ switchport mode trunk
+!
+interface FastEthernet0/22
+ switchport trunk allowed vlan 8,10,99
+ switchport mode trunk
+!
+interface FastEthernet0/23
+ switchport trunk allowed vlan 8,10,99
+ switchport mode trunk
+!
+interface FastEthernet0/24
+ switchport trunk allowed vlan 8,10,99
+ switchport mode trunk
+
+interface Vlan99
+ ip address 192.168.99.99 255.255.255.0
+
+ip default-gateway 192.168.99.1
+
+line con 0
+ password cisco
+ logging synchronous
+ login
+
+line vty 0 4
+ password cisco
+ logging synchronous
+ login
