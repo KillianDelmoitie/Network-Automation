@@ -2,11 +2,11 @@
 - name: Get ansible facts
   hosts: switches
   gather_facts: no
+  vars_files:
+    - vars.yml
   tasks:
-    - name: Display facts
-      cisco.ios.ios_facts:
-        gather_subset: all
-        gather_network_resources: all
-    - name: Display some facts
-      debug:
-        msg: "The hostname is {{ ansible_net_hostname }} and the OS is {{ ansible_net_version }}"
+    - name: Show interface status
+      ios_command:
+        commands:
+          - show interfaces status
+

@@ -1,0 +1,55 @@
+---
+- hosts: localhost
+  tasks:
+   - name: Get ansible date/time facts
+     setup:
+       filter: "ansible_date_time"
+       gather_subset: "!all"
+ 
+   - name: Store DTG as fact
+     set_fact:
+       DTG: "{{ ansible_date_time.date }}"
+ 
+   - name: Create Directory {{hostvars.localhost.DTG}}
+     file:
+      path: ~/backups/{{hostvars.localhost.DTG}}
+      state: directory
+
+
+    - name: Create SubDirectory switches {{hostvars.localhost.DTG}}
+     file:
+      path: ~/backups/switches/{{hostvars.localhost.DTG}}
+      state: directory
+
+
+      - name: Create SubDirectory routers {{hostvars.localhost.DTG}}
+     file:
+      path: ~/backups/routers/{{hostvars.localhost.DTG}}
+      state: directory
+  run_once: true
+---
+- hosts: switches 
+  tasks:
+   - name: Backup Running Config  
+     ios_command:
+       commands: show run  
+     register: config
+ 
+   - name: Save output to ~/backups/switches
+     copy:
+       content: "{{config.stdout[0]}}"
+       dest: "~/backups/switches/{{hostvars.localhost.DTG}}/{{ inventory_hostname }}-{{hostvars.localhost.DTG}}-config.txt"
+---
+- hosts: routers 
+  tasks:
+   - name: Backup Running Config  
+     ios_command:
+       commands: show run  
+     register: config
+ 
+   - name: Save output to ~/backups/routers
+     copy:
+       content: "{{config.stdout[0]}}"
+       dest: "~/backups/routers{{hostvars.localhost.DTG}}/{{ inventory_hostname }}-{{hostvars.localhost.DTG}}-config.txt"
+##ADD FIREWALL??
+

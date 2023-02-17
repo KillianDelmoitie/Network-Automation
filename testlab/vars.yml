@@ -1,0 +1,4 @@
+ansible_user: admin
+ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"
+ansible_become_method: admin
+##sudo yum install sshpass

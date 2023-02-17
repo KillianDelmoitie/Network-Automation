@@ -1,0 +1,24 @@
+---
+- name: Configure Fortinet Firewall F60
+  hosts: firewalls
+  collections:
+   - fortinet.fortios
+  connection: httpapi
+  vars:
+   vdom: "root"
+   ansible_httpapi_use_ssl: yes
+   ansible_httpapi_validate_certs: no
+   ansible_httpapi_port: 443
+  tasks:
+    - name: Get Firewall Version
+      ansible.builtin.import_role:
+        name: fortinet.fortios
+      fortinet.fortios.fortios_system_api:
+        url: "{{ api_url }}/v2/cmdb/system/global"
+        username: "{{ api_username }}"
+        password: "{{ api_password }}"
+        method: get
+        params:
+          format: rest
+      register: version
+
