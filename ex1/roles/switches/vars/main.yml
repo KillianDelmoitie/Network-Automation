@@ -1,0 +1,11 @@
+---
+# vars file for switches
+switchport_conf:
+  - switchport mode trunk
+  - switchport trunk allowed vlan 8,10,99
+
+vlans:
+  - id: 10
+    name: Students
+  - id: 20
+    name: Teachers

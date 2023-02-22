@@ -1,0 +1,5 @@
+ansible_host: 192.168.99.2 
+ansible_user: "admin" 
+ansible_become_password: admin
+ansible_ssh_pass: admin
+#ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"

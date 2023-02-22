@@ -1,0 +1,2 @@
+- include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/hostname.yml
+- include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/vlans.yml
