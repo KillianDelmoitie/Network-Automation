@@ -1,0 +1,71 @@
+---
+- name: Get ansible facts
+  hosts: switches
+  gather_facts: no
+  gather_subset: interfaces
+  vars_files:
+    - vars.yml
+
+  tasks:
+    - name: Change hostname
+      cisco.ios.ios_config:
+        lines: hostname MasterSwitch
+
+    - name: Show VLANs
+      cisco.ios.ios_command:
+        commands: show vlan brief
+      register: vlan_output
+
+    - set_fact:
+        vlan_list: "{{ vlan_output.stdout_lines[1:] | map('regex_replace', '^\\s*(\\d+)\\s+.*$', 'vlan \\1') | list }}"
+      
+
+    # - name: Create VLANs
+    #   cisco.ios.ios_config:
+    #     lines: 
+    #     - vlan {{ item.id }}
+    #     - name {{ item.name }}
+    #   with_items: "{{ vlans }}"
+    #   when: "'vlan ' ~ item.id not in vlan_list"
+    #   register: result
+
+    # - name: Check current interface configuration
+    #   cisco.ios.ios_command:
+    #     commands:
+    #       - show running-config interface {{ item }}
+    #   register: config_output
+    #   with_items:
+    #   - FastEthernet0/19
+    #   - FastEthernet0/20
+    #   - FastEthernet0/21
+    #   - FastEthernet0/22
+    #   - FastEthernet0/23
+    #   - FastEthernet0/24
+
+
+    - name: Apply interface configuration
+      cisco.ios.ios_l2_interfaces:
+        config:
+        - name: "{{ item }}"
+          mode: trunk
+          trunk:
+            allowed_vlans: 8,10,99
+      with_items: 
+      - FastEthernet0/19
+      - FastEthernet0/20
+      - FastEthernet0/21
+      - FastEthernet0/22
+      - FastEthernet0/23
+      - FastEthernet0/24
+      #when: switchport_conf | difference(item.stdout_lines) != switchport_conf
+      register: result
+    - debug:
+        var: result
+
+    
+    
+    
+    
+    - name: Save running to startup when modified
+      cisco.ios.ios_config:
+        save_when: modified

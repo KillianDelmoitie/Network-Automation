@@ -1,4 +1,18 @@
 ansible_user: admin
-ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"
-ansible_become_method: admin
+ansible_ssh_pass: admin
+ansible_become: yes
+ansible_become_method: enable
+ansible_become_password: admin
+ansible_connection_timeout: 120
+ansible_debug: true
 ##sudo yum install sshpass
+
+vlans:
+  - id: 10
+    name: Students
+  - id: 20
+    name: Teachers
+
+switchport_conf:
+  - switchport mode trunk
+  - switchport trunk allowed vlan 8,10,99
