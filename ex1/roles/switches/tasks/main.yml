@@ -1,2 +1,7 @@
 - include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/hostname.yml
 - include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/vlans.yml
+- include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/trunk.yml
+#TODO: - include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/user_create.yml
+#TODO: - include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/ip_adress.yml
+#- include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/default_gateway.yml
+- include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/save_running.yml

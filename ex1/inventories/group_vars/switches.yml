@@ -3,3 +3,10 @@ ansible_network_os : ios
 ansible_become_method: enable
 ansible_connection_timeout: 120
 ansible_debug: true
+
+
+vlans:
+  - id: 10
+    name: Students
+  - id: 20
+    name: Teachers
