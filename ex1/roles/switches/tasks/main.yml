@@ -6,4 +6,5 @@
 #TODO: - include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/ip_adress.yml
 #- include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/default_gateway.yml
 #TODO: shudown all unused ports, no shut on all the rest
+#TODO: vaults
 - include_tasks: /home/killian/Network-Automation/ex1/roles/switches/tasks/save_running.yml

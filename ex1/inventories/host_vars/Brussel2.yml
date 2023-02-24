@@ -1,18 +1,19 @@
-ansible_host: 192.168.99.11 
+ansible_host: 192.168.99.12 
 ansible_user: "admin" 
 ansible_become_password: admin
 ansible_ssh_pass: admin
 #ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"
 
-hostname: Brussel1
+hostname: Brussel2
 
-#Change all interfaces
+
 trunk_interfaces:
   FastEthernet0/19:
       allowed_vlans: "8,10,99"
   FastEthernet0/20:
       allowed_vlans: "8,10,99"
 
+#TODO: change the interfaces
 access_interfaces:
   FastEthernet0/9:
       vlan: 8
