@@ -1,0 +1,14 @@
+---
+- name: configure IP address
+  ios_config:
+    before: 
+      - interface {{ item }}
+    lines: 
+      - ip address {{ ip_config[item].ip }} {{ ip_config[item].subnet }}
+    after: 
+      - no shutdown
+    match: strict
+    parents: interface {{ item }}
+  with_items: "{{ ip_config.keys() }}"
+  when: ip_config is defined
+  

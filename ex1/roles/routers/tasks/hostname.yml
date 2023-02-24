@@ -1,0 +1,5 @@
+- name: Change hostname
+  cisco.ios.ios_hostname:
+    config:
+      hostname: "{{ hostname }}"
+  when: hostname is defined

@@ -1,0 +1,24 @@
+ansible_host: 192.168.99.3
+ansible_user: "admin" 
+ansible_become_password: admin
+ansible_ssh_pass: admin
+
+hostname: BruInter
+
+ip_config:
+  FastEthernet0/0:
+      ip: "192.168.1.2"
+      subnet: "255.255.255.0"
+
+interfaces:
+- name: FastEthernet0/0
+  subinterfaces:
+    - vlan_id: 8
+      ip: 192.168.8.1
+      subnet: 255.255.255.0
+    # - vlan_id: 10
+    #   ip: 192.168.10.1
+    #   subnet: 255.255.255.0
+    # - vlan_id: 99
+    #   ip: 192.168.99.1
+    #   subnet: 255.255.255.0

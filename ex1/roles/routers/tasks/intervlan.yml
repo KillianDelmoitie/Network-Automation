@@ -1,0 +1,26 @@
+---
+- name: configure subinterfaces
+  ios_config:
+    before: "interface {{ item.0.name }}.{{ item.1.vlan_id }}"
+    lines: 
+      - "encapsulation dot1Q {{ item.1.vlan_id }}"
+      - "ip address {{ item.1.ip }} {{ item.1.subnet }}"
+    after: 
+      - no shutdown
+    match: strict
+    parents: "interface {{ item.0.name }}.{{ item.1.vlan_id }}"
+  with_subelements:
+        - "{{ interfaces }}"
+        - subinterfaces
+
+- name: No shutdown on interface
+  ios_config:
+    before: interface {{ item }}
+    lines: 
+      - no shutdown
+    parents: interface {{ item }}
+  with_items: "{{ interfaces }}"
+  when: ip_config is defined
+  
+          
+      
