@@ -1,0 +1,2 @@
+- import_playbook: switches.yml
+- import_playbook: routers.yml

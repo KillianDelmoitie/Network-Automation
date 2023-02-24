@@ -6,7 +6,9 @@ ansible_debug: true
 
 
 vlans:
+  - id: 8
+    name: VLAN8
   - id: 10
-    name: Students
-  - id: 20
-    name: Teachers
+    name: VLAN10
+  - id: 99
+    name: Management

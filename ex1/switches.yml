@@ -1,5 +1,5 @@
 ---
-- name: Get ansible facts
+- name: Configure Switches
   hosts: switches
   gather_facts: no
   become: yes
@@ -8,8 +8,3 @@
     - switches
 
   tasks:
-
-
-
-      
-      

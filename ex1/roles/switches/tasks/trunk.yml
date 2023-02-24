@@ -1,5 +1,5 @@
 ---
-- name: Apply interface configuration
+- name: Switchport Trunk configuration
   cisco.ios.ios_l2_interfaces:
     config:
     - name: "{{ item }}"
@@ -8,4 +8,4 @@
         allowed_vlans: "{{ trunk_interfaces[item].allowed_vlans }}"
   with_items: "{{ trunk_interfaces.keys() }}"
   when: trunk_interfaces is defined
-  register: switchport_result
+  register: switchport_trunk_result
