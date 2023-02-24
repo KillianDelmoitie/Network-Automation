@@ -1,0 +1,11 @@
+---
+- name: Create VLANs
+  cisco.ios.ios_vlans:
+    config:
+    - name: "{{ item.name }}"
+      vlan_id: "{{ item.id }}"
+      shutdown: disabled
+      state: active
+    state: merged
+  with_items: "{{ vlans }}"
+  when: vlans is defined

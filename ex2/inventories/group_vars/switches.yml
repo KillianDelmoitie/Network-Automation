@@ -1,0 +1,14 @@
+ansible_connection: network_cli
+ansible_network_os : ios
+ansible_become_method: enable
+ansible_connection_timeout: 120
+ansible_debug: true
+
+
+vlans:
+  - id: 8
+    name: VLAN8
+  - id: 10
+    name: VLAN10
+  - id: 99
+    name: Management

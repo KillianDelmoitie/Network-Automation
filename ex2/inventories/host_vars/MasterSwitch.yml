@@ -1,0 +1,28 @@
+ansible_host: 192.168.99.99
+ansible_user: "admin" 
+ansible_become_password: admin
+ansible_ssh_pass: admin
+#ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"
+
+hostname: MasterSwitch
+
+
+trunk_interfaces:
+  FastEthernet0/19:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/20:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/21:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/22:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/23:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/24:
+      allowed_vlans: "8,10,99"
+
+ip_assignement:
+  Vlan99:
+      ip_address: "192.168.99.2 255.255.255.0" 
+
+default_gateway: "192.168.99.1"

@@ -1,0 +1,10 @@
+---
+- name: Configure Switches
+  hosts: switches
+  gather_facts: no
+  become: yes
+
+  roles:
+    - switches
+
+  tasks:

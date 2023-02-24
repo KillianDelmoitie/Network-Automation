@@ -1,0 +1,11 @@
+---
+- name: Switchport Access configuration
+  cisco.ios.ios_l2_interfaces:
+    config:
+    - name: "{{ item }}"
+      mode: access
+      access:
+        vlan: "{{ access_interfaces[item].vlan }}"
+  with_items: "{{ access_interfaces.keys() }}"
+  when: access_interfaces is defined
+  register: switchport_access_result
