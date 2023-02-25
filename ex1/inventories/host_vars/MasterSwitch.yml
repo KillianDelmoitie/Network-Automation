@@ -1,0 +1,63 @@
+ansible_host: 192.168.99.2
+ansible_user: "admin" 
+ansible_become_password: admin
+ansible_ssh_pass: admin
+#ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"
+
+#Change hostname
+#hostname: name
+hostname: MasterSwitch
+
+#Configure trunk interfaces
+##TEMPLATE##
+# trunk_interfaces:
+#   INTERFACE:
+#       allowed_vlans: "VLANS"
+#   INTERFACE:
+#       allowed_vlans: "VLANS"
+
+trunk_interfaces:
+  FastEthernet0/19:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/20:
+      allowed_vlans: "8,10,99"
+#   FastEthernet0/21:
+#       allowed_vlans: "8,10,99"
+#   FastEthernet0/22:
+#       allowed_vlans: "8,10,99"
+#   FastEthernet0/23:
+#       allowed_vlans: "8,10,99"
+#   FastEthernet0/24:
+#       allowed_vlans: "8,10,99"
+
+##CONFIGURE ACCESS INTERFACES
+##TEMPLATE##
+# access_interfaces:
+#   INTERFACE:
+#       vlan: VLAN_ID
+
+
+#Configure an IP on a certain IP 
+##TEMPLATE##
+# ip_assignement:
+#   INTERFACE:
+#       ip_address: "IP" 
+#       subnet: "SUBNET" 
+
+ip_assignement:
+  Vlan99:
+      ip_address: "192.168.99.2" 
+      subnet: "255.255.255.0" 
+
+#Configure default_gateway
+#TEMPLATE#
+#default_gateway: "IP"
+
+default_gateway: "192.168.99.1"
+
+#Shutdown unused ports
+
+shut_interfaces:
+- FastEthernet0/13
+- FastEthernet0/14
+ 

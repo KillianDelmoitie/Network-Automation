@@ -1,4 +1,8 @@
 ---
+#TODO: ip helper address
+#TODO: no ip domain-lookup
+
+
 # tasks file for routers
 #Creates a Backup of the running config and puts it in a file at ex1/backups
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/backup.yml
@@ -24,6 +28,3 @@
 
 #Save configuration when something was modified
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/save_running.yml
-#TODO: ip helper address
-#TODO: no ip domain-lookup
-#TODO static route

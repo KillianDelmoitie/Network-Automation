@@ -1,7 +1,7 @@
-----
+#Configure default gateway if default_gateway is defined
+---
 - name: Configure default gateway
   cisco.ios.ios_config:
     lines:
-    - ip default-gateway {{ default_gateway }}
-  run_once: true
+      - ip default-gateway {{ default_gateway }}
   when: default_gateway is defined

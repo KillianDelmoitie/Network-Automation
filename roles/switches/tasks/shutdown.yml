@@ -1,0 +1,11 @@
+#Shutdown all unused ports
+---
+- name: Shutdown interfaces
+  cisco.ios.ios_config:
+    before: 
+    - interface {{ item }}
+    lines:
+      - shutdown
+    parents: interface {{ item }}
+  with_items: "{{ shut_interfaces }}"
+  when: ip_assignement is defined
