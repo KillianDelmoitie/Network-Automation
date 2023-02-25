@@ -1,0 +1,40 @@
+ansible_host: 192.168.99.3
+ansible_user: "admin" 
+ansible_become_password: admin
+ansible_ssh_pass: admin
+
+hostname: BrusselRouter
+
+ip_config:
+  FastEthernet0/0:
+      ip: "192.168.1.2"
+      subnet: "255.255.255.0"
+
+
+ospf_processes:
+  - process_id: 1
+    router_id: 1.1.1.1
+    default_information:
+      originate: true
+    network:
+      - address: 192.168.2.0
+        wildcard_bits: 0.0.0.3
+        area: 0
+      - address: 192.168.5.0
+        wildcard_bits: 0.0.0.3
+        area: 0
+      - address: 192.165.200.0
+        wildcard_bits: 0.0.0.255
+        area: 0
+
+pools:
+- name: "DHCPPOOL"
+  subconfigurations:
+    - network: "192.168.99.0 255.255.255.0"
+      default_router: "192.168.2.1"
+  
+dhcp_excluded:
+- "192.168.2.1"
+- "192.168.8.1 192.168.8.2"
+- "192.168.10.1 192.168.10.2"
+- "192.168.99.1 192.168.99.2"

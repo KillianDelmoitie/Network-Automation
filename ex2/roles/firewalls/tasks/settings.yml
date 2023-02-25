@@ -1,0 +1,5 @@
+- name: Configure system settings
+  fortios_system_global:
+    hostname: "FW1"
+    timezone: "Europe/London"
+  

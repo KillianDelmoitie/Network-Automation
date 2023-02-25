@@ -1,0 +1,4 @@
+ansible_host: 192.168.1.99
+ansible_user: admin
+ansible_password: finalwork
+ansible_network_os: fortinet

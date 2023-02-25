@@ -1,0 +1,18 @@
+ansible_host: 192.168.99.2
+ansible_user: "admin" 
+ansible_become_password: admin
+ansible_ssh_pass: admin
+#ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"
+
+hostname: SW1
+
+
+trunk_interfaces:
+  FastEthernet0/19:
+      allowed_vlans: "9,10"
+
+access_interfaces:
+  FastEtherne0/9:
+      vlan: 9
+  FastEthernet0/10:
+      vlan: 10

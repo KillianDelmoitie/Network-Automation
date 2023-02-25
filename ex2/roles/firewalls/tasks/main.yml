@@ -1,0 +1,3 @@
+---
+# tasks file for firewalls
+- include_tasks: /home/killian/Network-Automation/ex2/roles/firewalls/tasks/settings.yml
