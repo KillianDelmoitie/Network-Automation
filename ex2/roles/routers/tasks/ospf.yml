@@ -1,7 +1,0 @@
----
-- name: OSPF config
-  cisco.ios.ios_ospfv2:
-    config:
-      processes: "{{ ospf_processes }}"
-    state: merged
-  when: ospf_processes is defined

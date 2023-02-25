@@ -1,8 +1,0 @@
----
-- name: Configure {{ item }} interface
-  cisco.ios.ios_config:
-    lines:
-      - interface {{ item }}
-      - ip address {{ ip_assignement[item].ip_address }}
-  with_items: "{{ ip_assignement.keys() }}"
-  when: ip_assignement is defined

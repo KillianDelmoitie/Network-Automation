@@ -1,29 +1,29 @@
 ---
 # tasks file for routers
 #Creates a Backup of the running config and puts it in a file at ex1/backups
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/backup.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/backup.yml
 
 #Changes the hostname if the variable is available in the host_vars file of the host
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/hostname.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/hostname.yml
 
 #If there is a variable ip_config (host_vars) then those configs will be configured in the interface of the host
 #followed by a no shutdown
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/ip_address.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/ip_address.yml
 
 #If ip_routes exists in host_vars then an ip static route will be created
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/ip_route.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/ip_route.yml
 
 #Configure Intervlan routing if "interfaces" is available
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/intervlan.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/intervlan.yml
 
 #Configure OSPF if ospf_processes is available
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/ospf.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/ospf.yml
 
 #Configure DHCP (pools need to be available) & DHCP excluded addresses (dhcp_excluded has to be available)
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/dhcp.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/dhcp.yml
 
 #Save configuration when something was modified
-- include_tasks: /home/killian/Network-Automation/ex1/roles/routers/tasks/save_running.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/save_running.yml
 #TODO: ip helper address
 #TODO: no ip domain-lookup
 #TODO static route
