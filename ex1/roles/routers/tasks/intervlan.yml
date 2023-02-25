@@ -12,15 +12,17 @@
   with_subelements:
         - "{{ interfaces }}"
         - subinterfaces
+  when: interfaces is defined
 
 - name: No shutdown on interface
-  ios_config:
-    before: interface {{ item }}
-    lines: 
-      - no shutdown
-    parents: interface {{ item }}
-  with_items: "{{ interfaces }}"
-  when: ip_config is defined
+  cisco.ios.ios_interfaces:
+    config:
+    - name: "{{ item.0.name }}"
+      enabled: true
+  with_subelements:
+        - "{{ interfaces }}"
+        - subinterfaces
+  when: interfaces is defined
   
           
       

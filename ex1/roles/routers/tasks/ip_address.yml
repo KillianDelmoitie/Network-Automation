@@ -1,6 +1,6 @@
 ---
 - name: configure IP address
-  ios_config:
+  cisco.ios.ios_config:
     before: 
       - interface {{ item }}
     lines: 
