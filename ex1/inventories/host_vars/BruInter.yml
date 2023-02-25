@@ -13,6 +13,7 @@ hostname: BruInter
   #interface:
     #ip: "0.0.0.0"
     #subnet: "0.0.0.0"
+  
 ip_config:
   FastEthernet0/0:
       ip: "192.168.1.2"
@@ -92,5 +93,11 @@ ospf_processes:
 # dhcp_excluded:
 # - "IP"
 # - "IP-FROM IP-TO"
-  
+
+##Configure IP helper address
+##TEMPLATE##
+# ip_helper:
+#   interface: INTERFACE
+#   address: IP
+
 

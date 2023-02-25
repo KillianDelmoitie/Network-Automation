@@ -1,14 +1,14 @@
 ---
-#TODO: ip helper address
-#TODO: no ip domain-lookup
-
-
 # tasks file for routers
+
 #Creates a Backup of the running config and puts it in a file at ex1/backups
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/backup.yml
 
 #Changes the hostname if the variable is available in the host_vars file of the host
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/hostname.yml
+
+#Changes the hostname if the variable is available in the host_vars file of the host
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/domainlookup.yml
 
 #If there is a variable ip_config (host_vars) then those configs will be configured in the interface of the host
 #followed by a no shutdown
@@ -23,7 +23,7 @@
 #Configure OSPF if ospf_processes is available
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/ospf.yml
 
-#Configure DHCP (pools need to be available) & DHCP excluded addresses (dhcp_excluded has to be available)
+#Configure DHCP (pools need to be available) & DHCP excluded addresses (dhcp_excluded has to be available) + IP helper-address
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/dhcp.yml
 
 #Save configuration when something was modified

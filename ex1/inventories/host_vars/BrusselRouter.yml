@@ -7,6 +7,9 @@ ansible_ssh_pass: admin
 #hostname: name
 hostname: BrusselRouter
 
+#If domain_lookup is false no ip domain-lookup command will be executed
+domain_lookup: false
+
 #Assign IP to an interface
 ###TEMPLATE###
 #ip_config:
@@ -102,3 +105,15 @@ dhcp_excluded:
 - "192.168.8.1 192.168.8.2"
 - "192.168.10.1 192.168.10.2"
 - "192.168.99.1 192.168.99.2"
+
+##Configure IP helper address
+##TEMPLATE##
+# ip_helper:
+#   interface: INTERFACE
+#   address: IP
+
+ip_helper:
+  interface: FastEthernet0/0
+  address: "192.168.2.1"
+
+

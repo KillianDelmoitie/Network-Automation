@@ -1,0 +1,8 @@
+#if variable is false, 
+---
+- name: configure domain lookup
+  cisco.ios.ios_config:
+    lines: 
+      - no ip domain-lookup
+  when: domain_lookup is false
+  

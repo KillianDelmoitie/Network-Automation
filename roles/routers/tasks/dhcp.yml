@@ -18,3 +18,13 @@
     - ip dhcp excluded-address {{ item }}
   with_items: "{{ dhcp_excluded }}"
   when: dhcp_excluded is defined
+
+- name: IP helper address
+  cisco.ios.ios_config:
+    before: 
+    - interface {{ ip_helper.interface }}
+    lines:
+      - ip helper-address {{ ip_helper.address }}
+    parents: interface {{ ip_helper.interface }}
+  with_items: "{{ ip_helper }}"
+  when: ip_helper is defined
