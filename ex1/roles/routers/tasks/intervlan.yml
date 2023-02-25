@@ -1,3 +1,4 @@
+##CONFIGURE Router on a stick if interfaces is defined
 ---
 - name: configure subinterfaces
   ios_config:

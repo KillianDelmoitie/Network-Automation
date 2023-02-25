@@ -1,3 +1,5 @@
+#Configure DHCP (pools need to be available) & DHCP excluded addresses (dhcp_excluded has to be available)
+---
 - name: DHCP CONFIG
   cisco.ios.ios_config:
     before: "ip dhcp pool {{ item.0.name }}"

@@ -5,6 +5,8 @@
       - address_families:
         - afi: ipv4
           routes:
-          - dest: 0.0.0.0/0
+          - dest: "{{ item.dest }}/{{ item.mask }}"
             next_hops:
-            - forward_router_address: 192.168.99.1
+            - forward_router_address: "{{ item.next_hop }}"
+  with_items: "{{ ip_routes }}"
+  when: ip_routes is defined

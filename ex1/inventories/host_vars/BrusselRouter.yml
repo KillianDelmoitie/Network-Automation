@@ -3,13 +3,61 @@ ansible_user: "admin"
 ansible_become_password: admin
 ansible_ssh_pass: admin
 
+#Give Hostname to Router
+#hostname: name
 hostname: BrusselRouter
+
+#Assign IP to an interface
+###TEMPLATE###
+#ip_config:
+  #interface:
+    #ip: "0.0.0.0"
+    #subnet: "0.0.0.0"
 
 ip_config:
   FastEthernet0/0:
-      ip: "192.168.1.2"
-      subnet: "255.255.255.0"
+    ip: "192.168.1.2"
+    subnet: "255.255.255.0"
 
+#Create an ip route
+###TEMPLATE###
+#ip_routes:
+  #-dest: IP
+  # mask: MASK
+  # next_hop: IP
+
+ip_routes:
+  - dest: "0.0.0.0"
+    mask: 0
+    next_hop: "192.168.99.1"
+
+#INTERVLAN ROUTING#
+##TEMPLATE##
+# interfaces:
+# - name: INTERFACE (NOT SUBINTERFACE)
+#   subinterfaces:
+#     - vlan_id: VLAN_ID
+#       ip: IP
+#       subnet: SUBNET
+#     - vlan_id: VLAN_ID
+#       ip: IP
+#       subnet: SUBNET
+
+
+##CONFIGURE OSPF
+##TEMPLATE##
+# ospf_processes:
+#   - process_id: PROCESS ID
+#     router_id: ROUTER ID
+#     default_information:
+#       originate: true/false
+#     network:
+#       - address: IP
+#         wildcard_bits: WILDCARD
+#         area: AREA
+#       - address: IP
+#         wildcard_bits: WILDCARD
+#         area: AREA
 
 ospf_processes:
   - process_id: 1
@@ -27,12 +75,28 @@ ospf_processes:
         wildcard_bits: 0.0.0.255
         area: 0
 
+###CONFIGURE DHCP###
+
+##Configure DHCP POOL##
+#Template#
+# pools:
+# - name: NAME
+#   subconfigurations:
+#     - network: NETWORK (IP SUBNET)
+#       default_router: IP
+
 pools:
 - name: "DHCPPOOL"
   subconfigurations:
     - network: "192.168.99.0 255.255.255.0"
       default_router: "192.168.2.1"
   
+##EXCLUDE DHCP ADDRESSES##
+##TEMPLATE##
+# dhcp_excluded:
+# - "IP"
+# - "IP-FROM IP-TO"
+
 dhcp_excluded:
 - "192.168.2.1"
 - "192.168.8.1 192.168.8.2"

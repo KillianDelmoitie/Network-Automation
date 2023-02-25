@@ -5,3 +5,4 @@
       processes: "{{ ospf_processes }}"
     state: merged
   when: ospf_processes is defined
+

@@ -1,3 +1,5 @@
+#If there is a variable ip_config (host_vars) then those configs will be configured in the interface of the host
+#followed by a no shutdown
 ---
 - name: configure IP address
   cisco.ios.ios_config:

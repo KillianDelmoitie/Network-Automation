@@ -1,3 +1,5 @@
+#Changes the hostname if the variable is available in the host_vars file of the host
+---
 - name: Change hostname
   cisco.ios.ios_hostname:
     config:

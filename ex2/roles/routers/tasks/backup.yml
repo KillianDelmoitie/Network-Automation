@@ -1,0 +1,15 @@
+---
+- name: Execute show running-config command
+  cisco.ios.ios_command:
+    commands:
+    - show running-config
+  register: show_running_config
+
+- name: get timestamp
+  command: date +%Y%m%d-%H%M
+  register: timestamp
+
+- name: Save output to file
+  copy:
+    content: "{{ show_running_config.stdout[0] }}"
+    dest: "/home/killian/Network-Automation/ex2/backups/{{ inventory_hostname }}-{{ timestamp.stdout }}.cfg"
