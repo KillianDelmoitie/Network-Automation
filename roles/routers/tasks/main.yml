@@ -6,6 +6,7 @@
 
 #Changes the hostname if the variable is available in the host_vars file of the host
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/hostname.yml
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/nat.yml
 
 #Changes the hostname if the variable is available in the host_vars file of the host
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/domainlookup.yml

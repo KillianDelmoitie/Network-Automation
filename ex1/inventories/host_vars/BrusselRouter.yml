@@ -116,4 +116,13 @@ ip_helper:
   interface: FastEthernet0/0
   address: "192.168.2.1"
 
+#Configure ip nat inside/outside on interfaces
+ip_int_nat:
+  interface: FastEthernet0/0
+  inout: inside
+
+#Specific configuration for ex1, since NATTING is seen as some advanced network configuration and is for network administrators
+#ex1_nat: true
+
+
 

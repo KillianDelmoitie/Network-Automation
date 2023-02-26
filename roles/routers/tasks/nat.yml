@@ -1,0 +1,22 @@
+
+
+- name: IP NAT INSIDE/OUTSIDE on interfaces
+  cisco.ios.ios_config:
+    before: 
+    - interface {{ ip_int_nat.interface }}
+    lines:
+      - ip nat {{ ip_int_nat.inout }}
+    parents: interface {{ ip_int_nat.interface }}
+  with_items: "{{ ip_int_nat }}"
+  when: ip_int_nat is defined
+
+- name: NAT CONFIG FOR EX1
+  cisco.ios.ios_config:
+    lines:
+      - access-list 1 permit any
+      - ip nat pool NATPOOL 209.165.200.241 209.165.200.246 netmask 255.255.255.224
+      - ip nat inside source list 1 pool NATPOOL overload
+      - ip nat inside source static 192.168.5.230 209.165.200.230
+      - ip nat inside source static 192.168.5.231 209.165.200.231
+  when: ex1_nat is true
+
