@@ -6,7 +6,6 @@
 
 #Changes the hostname if the variable is available in the host_vars file of the host
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/hostname.yml
-- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/nat.yml
 
 #Changes the hostname if the variable is available in the host_vars file of the host
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/domainlookup.yml
@@ -26,6 +25,9 @@
 
 #Configure DHCP (pools need to be available) & DHCP excluded addresses (dhcp_excluded has to be available) + IP helper-address
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/dhcp.yml
+
+#Nat config only for ex1
+- include_tasks: /home/killian/Network-Automation/roles/routers/tasks/nat.yml
 
 #Save configuration when something was modified
 - include_tasks: /home/killian/Network-Automation/roles/routers/tasks/save_running.yml

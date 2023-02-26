@@ -1,10 +1,30 @@
 ---
-- name: Configure Routers
+- name: Configure Firewalls
   hosts: firewalls
   gather_facts: no
   become: yes
 
-  roles:
-    - firewalls
+  # roles:
+  #   - firewalls
 
   tasks:
+
+  - name: Create VLAN1 on port1
+    fortios_system_interface:
+      host: "192.168.1.99"
+      username: "admin"
+      password: "finalwork"
+      https: "True"
+      ssl_verify: 'False'
+      vdom: "root"
+      system_interface:
+        state: "present"
+        vdom: root
+        interface: port2
+        type: vlan
+        vlanid: 10
+        name: VLAN10
+        mode: static
+        ip: "172.16.9.1 255.255.255.0"
+        allowaccess: ['https', 'ping']
+    

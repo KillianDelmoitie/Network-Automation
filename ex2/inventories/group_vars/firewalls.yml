@@ -1,2 +1,1 @@
-ansible_network_os: fortinet
-ansible_connection_timeout: 120
+ansible_python_interpreter: /usr/bin/python
