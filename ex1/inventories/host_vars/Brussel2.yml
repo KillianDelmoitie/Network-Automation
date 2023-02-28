@@ -4,24 +4,72 @@ ansible_become_password: admin
 ansible_ssh_pass: admin
 #ansible_ssh_pass: "{{ lookup('file', 'vault_pass.txt') }}"
 
+#Change hostname
+#hostname: name
 hostname: Brussel2
 
+#Configure trunk interfaces
+##TEMPLATE##
+# trunk_interfaces:
+#   INTERFACE:
+#       allowed_vlans: "VLANS"
+#   INTERFACE:
+#       allowed_vlans: "VLANS"
 
 trunk_interfaces:
-  FastEthernet0/19:
+  FastEthernet0/1:
       allowed_vlans: "8,10,99"
-  FastEthernet0/20:
+  FastEthernet0/2:
       allowed_vlans: "8,10,99"
 
-#TODO: change the interfaces
+##CONFIGURE ACCESS INTERFACES
+##TEMPLATE##
+# access_interfaces:
+#   INTERFACE:
+#       vlan: VLAN_ID
+
 access_interfaces:
-  FastEthernet0/9:
+  FastEthernet0/3:
       vlan: 8
-  FastEthernet0/10:
+  FastEthernet0/4:
       vlan: 10
+
+#Configure an IP on a certain IP 
+##TEMPLATE##
+# ip_assignement:
+#   INTERFACE:
+#       ip_address: "IP" 
+#       subnet: "SUBNET" 
 
 ip_assignement:
   Vlan99:
-      ip_address: "192.168.99.2 255.255.255.0" 
+      ip_address: "192.168.99.12 255.255.255.0" 
+
+#Configure default_gateway
+#TEMPLATE#
+#default_gateway: "IP"
 
 default_gateway: "192.168.99.1"
+
+#Shutdown unused ports  
+shut_interfaces:
+- FastEthernet0/5
+- FastEthernet0/6
+- FastEthernet0/7
+- FastEthernet0/8
+- FastEthernet0/9
+- FastEthernet0/10
+- FastEthernet0/11
+- FastEthernet0/12
+- FastEthernet0/13
+- FastEthernet0/14
+- FastEthernet0/15
+- FastEthernet0/16
+- FastEthernet0/17
+- FastEthernet0/18
+- FastEthernet0/19
+- FastEthernet0/20
+- FastEthernet0/21
+- FastEthernet0/22
+- FastEthernet0/23
+- FastEthernet0/24

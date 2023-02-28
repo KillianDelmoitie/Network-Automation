@@ -1,4 +1,4 @@
-ansible_host: 192.168.99.2
+ansible_host: 192.168.99.99
 ansible_user: "admin" 
 ansible_become_password: admin
 ansible_ssh_pass: admin
@@ -17,18 +17,24 @@ hostname: MasterSwitch
 #       allowed_vlans: "VLANS"
 
 trunk_interfaces:
-  FastEthernet0/19:
+  FastEthernet0/1:
       allowed_vlans: "8,10,99"
-  FastEthernet0/20:
+  FastEthernet0/2:
       allowed_vlans: "8,10,99"
-#   FastEthernet0/21:
-#       allowed_vlans: "8,10,99"
-#   FastEthernet0/22:
-#       allowed_vlans: "8,10,99"
-#   FastEthernet0/23:
-#       allowed_vlans: "8,10,99"
-#   FastEthernet0/24:
-#       allowed_vlans: "8,10,99"
+  FastEthernet0/3:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/4:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/5:
+      allowed_vlans: "8,10,99"
+  FastEthernet0/6:
+      allowed_vlans: "8,10,99"
+  GigabitEthernet0/1:
+      allowed_vlans: "99" #Management Switch
+  GigabitEthernet0/2:
+      allowed_vlans: "8,10,99"
+
+
 
 ##CONFIGURE ACCESS INTERFACES
 ##TEMPLATE##
@@ -46,8 +52,7 @@ trunk_interfaces:
 
 ip_assignement:
   Vlan99:
-      ip_address: "192.168.99.2" 
-      subnet: "255.255.255.0" 
+      ip_address: "192.168.99.99 255.255.255.0" 
 
 #Configure default_gateway
 #TEMPLATE#
@@ -55,9 +60,24 @@ ip_assignement:
 
 default_gateway: "192.168.99.1"
 
-#Shutdown unused ports
-
+#Shutdown unused ports  
 shut_interfaces:
+- FastEthernet0/7
+- FastEthernet0/8
+- FastEthernet0/9
+- FastEthernet0/10
+- FastEthernet0/11
+- FastEthernet0/12
 - FastEthernet0/13
 - FastEthernet0/14
+- FastEthernet0/15
+- FastEthernet0/16
+- FastEthernet0/17
+- FastEthernet0/18
+- FastEthernet0/19
+- FastEthernet0/20
+- FastEthernet0/21
+- FastEthernet0/22
+- FastEthernet0/23
+- FastEthernet0/24
  

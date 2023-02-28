@@ -1,4 +1,4 @@
-ansible_host: 192.168.99.3
+ansible_host: 192.168.99.5
 ansible_user: "admin" 
 ansible_become_password: admin
 ansible_ssh_pass: admin
@@ -6,6 +6,9 @@ ansible_ssh_pass: admin
 #Give Hostname to Router
 #hostname: name
 hostname: BruInter
+
+#If domain_lookup is false no ip domain-lookup command will be executed
+domain_lookup: false
 
 #Assign IP to an interface
 ###TEMPLATE###
@@ -15,9 +18,9 @@ hostname: BruInter
     #subnet: "0.0.0.0"
   
 ip_config:
-  FastEthernet0/0:
-      ip: "192.168.1.2"
-      subnet: "255.255.255.0"
+  Serial0/1/1:
+      ip: "192.168.2.1"
+      subnet: "255.255.255.252"
 
 #Create an ip route
 ###TEMPLATE###
@@ -44,13 +47,13 @@ interfaces:
   subinterfaces:
     - vlan_id: 8
       ip: 192.168.8.1
+      subnet: 255.255.254.0
+    - vlan_id: 10
+      ip: 192.168.10.1
       subnet: 255.255.255.0
-    # - vlan_id: 10
-    #   ip: 192.168.10.1
-    #   subnet: 255.255.255.0
-    # - vlan_id: 99
-    #   ip: 192.168.99.1
-    #   subnet: 255.255.255.0
+    - vlan_id: 99
+      ip: 192.168.99.1
+      subnet: 255.255.255.0
 
 ##CONFIGURE OSPF
 ##TEMPLATE##
@@ -77,6 +80,15 @@ ospf_processes:
       - address: 192.168.2.0
         wildcard_bits: 0.0.0.3
         area: 0
+      - address: 192.168.8.0
+        wildcard_bits: 0.0.1.255
+        area: 0
+      - address: 192.168.10.0
+        wildcard_bits: 0.0.0.255
+        area: 0
+      - address: 192.168.99.0
+        wildcard_bits: 0.0.0.255
+        area: 0
 
 ###CONFIGURE DHCP###
 
@@ -96,8 +108,12 @@ ospf_processes:
 
 ##Configure IP helper address
 ##TEMPLATE##
-# ip_helper:
-#   interface: INTERFACE
-#   address: IP
+ip_helper:
+  - interface: "FastEthernet0/0.8"
+    address: "192.168.2.2"
+  - interface: "FastEthernet0/0.10"
+    address: "192.168.2.2"
+  - interface: "FastEthernet0/0.99"
+    address: "192.168.2.2"
 
 

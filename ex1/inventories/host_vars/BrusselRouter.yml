@@ -1,4 +1,5 @@
-ansible_host: 192.168.99.3
+# ansible_host: 192.168.99.6
+ansible_host: 192.168.99.6
 ansible_user: "admin" 
 ansible_become_password: admin
 ansible_ssh_pass: admin
@@ -18,9 +19,13 @@ domain_lookup: false
     #subnet: "0.0.0.0"
 
 ip_config:
-  FastEthernet0/0:
-    ip: "192.168.1.2"
-    subnet: "255.255.255.0"
+  Serial0/1/1:
+    ip: "192.168.2.2"
+    subnet: "255.255.255.252"
+
+clockrate: 
+  - interface: Serial0/1/1
+    value: "128000"
 
 #Create an ip route
 ###TEMPLATE###
@@ -32,7 +37,7 @@ ip_config:
 ip_routes:
   - dest: "0.0.0.0"
     mask: 0
-    next_hop: "192.168.99.1"
+    next_hop: FastEthernet0/1
 
 #INTERVLAN ROUTING#
 ##TEMPLATE##
@@ -65,17 +70,9 @@ ip_routes:
 ospf_processes:
   - process_id: 1
     router_id: 1.1.1.1
-    default_information:
-      originate: true
     network:
       - address: 192.168.2.0
         wildcard_bits: 0.0.0.3
-        area: 0
-      - address: 192.168.5.0
-        wildcard_bits: 0.0.0.3
-        area: 0
-      - address: 192.165.200.0
-        wildcard_bits: 0.0.0.255
         area: 0
 
 ###CONFIGURE DHCP###
@@ -89,10 +86,14 @@ ospf_processes:
 #       default_router: IP
 
 pools:
-- name: "DHCPPOOL"
+- name: "vlan8"
   subconfigurations:
-    - network: "192.168.99.0 255.255.255.0"
-      default_router: "192.168.2.1"
+    - network: "192.168.8.0 255.255.254.0"
+      default_router: "192.168.8.1"
+- name: "vlan10"
+  subconfigurations:
+    - network: "192.168.10.0 255.255.255.0"
+      default_router: "192.168.10.1"
   
 ##EXCLUDE DHCP ADDRESSES##
 ##TEMPLATE##
@@ -101,10 +102,13 @@ pools:
 # - "IP-FROM IP-TO"
 
 dhcp_excluded:
-- "192.168.2.1"
 - "192.168.8.1 192.168.8.2"
 - "192.168.10.1 192.168.10.2"
-- "192.168.99.1 192.168.99.2"
+- "192.168.99.1 192.168.99.13"
+- "192.168.99.99 192.168.99.99"
+
+ip_a_DHCP:
+- fastEthernet 0/1
 
 ##Configure IP helper address
 ##TEMPLATE##
@@ -112,17 +116,18 @@ dhcp_excluded:
 #   interface: INTERFACE
 #   address: IP
 
-ip_helper:
-  interface: FastEthernet0/0
-  address: "192.168.2.1"
 
 #Configure ip nat inside/outside on interfaces
 ip_int_nat:
-  interface: FastEthernet0/0
-  inout: inside
+  - interface: Serial0/1/1
+    inout: inside
+  - interface: FastEthernet0/1
+    inout: outside
+
 
 #Specific configuration for ex1, since NATTING is seen as some advanced network configuration and is for network administrators
-#ex1_nat: true
+
+ex1_nat: true
 
 
 
