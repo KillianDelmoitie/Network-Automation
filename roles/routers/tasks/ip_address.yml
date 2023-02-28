@@ -1,5 +1,5 @@
-#If there is a variable ip_config (host_vars) then those configs will be configured in the interface of the host
-#followed by a no shutdown
+# If there is a variable ip_config (host_vars) then those configs will be configured in the interface of the host
+# followed by a no shutdown
 ---
 - name: configure IP address
   cisco.ios.ios_config:
@@ -10,7 +10,14 @@
     after: 
       - no shutdown
     match: strict
-    parents: interface {{ item }}
   with_items: "{{ ip_config.keys() }}"
   when: ip_config is defined
-  
+
+- name: configure clockrate
+  cisco.ios.ios_config:
+    before: 
+      - interface {{ item.interface }}
+    lines: 
+      - clock rate {{ item.value }}
+  with_items: "{{ clockrate }}"
+  when: clockrate is defined
