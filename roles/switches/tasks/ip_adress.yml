@@ -5,7 +5,7 @@
     before: 
     - interface {{ item }}
     lines:
-      - ip address {{ ip_assignement[item].ip_address }} {{ ip_assignement[item].subnet }}
+      - ip address {{ ip_assignement[item].ip_address }}
     after: 
       - no shutdown
     match: strict
