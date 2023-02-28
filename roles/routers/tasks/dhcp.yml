@@ -22,9 +22,19 @@
 - name: IP helper address
   cisco.ios.ios_config:
     before: 
-    - interface {{ ip_helper.interface }}
+    - interface {{ item.interface }}
     lines:
-      - ip helper-address {{ ip_helper.address }}
-    parents: interface {{ ip_helper.interface }}
+      - ip helper-address {{ item.address }}
+    parents: interface {{ item.interface }}
   with_items: "{{ ip_helper }}"
   when: ip_helper is defined
+
+- name: IP address DHCP
+  cisco.ios.ios_config:
+    before: 
+    - interface {{ item }}
+    lines:
+      - ip address dhcp
+    parents: interface {{ item }}
+  with_items: "{{ ip_a_DHCP }}"
+  when: ip_a_DHCP is defined
