@@ -1,0 +1,62 @@
+-----BRUSSEL ROUTER------
+hostname BrusselRouter
+enable secret admin
+username admin password 0 admin
+ip domain name cisco.com
+
+interface FastEthernet0/0
+ no shutdown
+ exit
+
+interface FastEthernet0/0.99
+ encapsulation dot1Q 99
+ ip address 192.168.99.6 255.255.255.0
+ exit
+
+
+ip route 192.168.99.0 255.255.255.0 192.168.99.1
+ip route 192.168.1.0 255.255.255.0 192.168.99.1
+
+
+
+crypto key generate rsa modulus 2048
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+-----InterVLAN router------
+
+hostname BruInter
+enable secret admin
+username admin password 0 admin
+ip domain name cisco.com
+
+interface FastEthernet0/0
+ no shutdown
+ exit
+
+interface FastEthernet0/0.99
+ encapsulation dot1Q 99
+ ip address 192.168.99.5 255.255.255.0
+ exit
+
+
+ip route 192.168.99.0 255.255.255.0 192.168.99.1
+ip route 192.168.1.0 255.255.255.0 192.168.99.1
+
+crypto key generate rsa modulus 2048
+
+
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+
+
+
+----------------TEST ALL-----------
+ansible all -m ping -v

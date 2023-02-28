@@ -1,0 +1,181 @@
+---------BRUSSEL 1---------------
+hostname Brussel1
+enable secret admin
+username admin password 0 admin
+ip domain-name cisco.com
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+crypto key generate rsa modulus 2048
+
+ip ssh version 2
+
+
+ip default-gateway 192.168.99.1
+
+VLAN 99
+name Management
+exit
+
+interface Vlan99
+ ip address 192.168.99.11 255.255.255.0
+ no shut
+ exit
+
+
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 99
+ switchport mode trunk
+ exit
+
+
+ ---------BRUSSEL 2---------------
+
+
+hostname Brussel2
+enable secret admin
+username admin password 0 admin
+ip domain-name cisco.com
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+crypto key generate rsa modulus 2048
+
+ip ssh version 2
+
+
+ip default-gateway 192.168.99.1
+
+VLAN 99
+name Management
+exit
+
+interface Vlan99
+ ip address 192.168.99.12 255.255.255.0
+ no shut
+ exit
+
+
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 99
+ switchport mode trunk
+ exit
+
+
+ ---------BRUSSEL 3---------------
+
+
+hostname Brussel3
+enable secret admin
+username admin password 0 admin
+ip domain-name cisco.com
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+crypto key generate rsa modulus 2048
+
+ip ssh version 2
+
+
+ip default-gateway 192.168.99.1
+
+VLAN 99
+name Management
+exit
+
+interface Vlan99
+ ip address 192.168.99.13 255.255.255.0
+ no shut
+ exit
+
+
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 99
+ switchport mode trunk
+ exit
+
+
+---------MasterSwitch---------------
+
+
+hostname MasterSwitch
+enable secret admin
+username admin password 0 admin
+ip domain-name cisco.com
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+crypto key generate rsa modulus 2048
+
+ip ssh version 2
+
+
+ip default-gateway 192.168.99.1
+
+VLAN 99
+name Management
+exit
+
+interface Vlan99
+ ip address 192.168.99.99 255.255.255.0
+ no shut
+ exit
+
+
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 99
+ switchport mode trunk
+ exit
+
+
+----- MANAGEMENT SWITCH -----
+hostname ManagementSW
+enable secret admin
+username admin password 0 admin
+ip domain-name cisco.com
+
+line vty 0 4
+ login local
+ transport input ssh
+ exit
+
+crypto key generate rsa modulus 2048
+
+ip ssh version 2
+
+
+ip default-gateway 192.168.99.1
+
+VLAN 99
+name Management
+exit
+
+interface Vlan99
+ ip address 192.168.99.3 255.255.255.0
+ no shut
+ exit
+
+
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 99
+ switchport mode trunk
+ exit
+
+interface range fastEthernet 0/1-6
+ switchport mode trunk
+ switchport trunk allowed vlan 99
+ exit
+
+
