@@ -1,0 +1,12 @@
+---
+- name: Create address object
+  fortios_firewall_address:
+    vdom: "{{ vdom }}"
+    state: present
+    firewall_address:
+      allow_routing: enable
+      name: "{{ item.name }}"
+      type: "ipmask"
+      subnet: "{{ item.subnet }}"
+  with_items: "{{ addr_obj }}"
+  when: addr_obj is defined
