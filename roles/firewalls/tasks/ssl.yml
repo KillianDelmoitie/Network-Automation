@@ -1,0 +1,46 @@
+---
+- name: Configure VPN SSL portal
+  fortios_vpn_ssl_web_portal:
+    vdom: "{{ vdom }}"
+    state: "present"
+    vpn_ssl_web_portal:
+      name: "sslvpn"
+      tunnel_mode: "enable"
+      split_tunneling: "enable"
+      ip_pools:
+        - name: "SSLVPN_TUNNEL_ADDR1"
+      web_mode: "enable"
+      heading: "SSL-VPN Portal"
+
+- name: Create User
+  fortios_user_local:
+    vdom: "{{ vdom }}"
+    state: "present"
+    user_local:
+      name: "test"
+      passwd: "ssltest"
+
+
+- name: Create group for all SSL-Users
+  fortios_user_group:
+    vdom: "{{ vdom }}"
+    state: "present"
+    user_group:
+      name: "SSL-GROUP"
+      group_type: "firewall"
+      member:
+        - name: "test"
+
+- name: Configure VPN SSL settings
+  fortios_vpn_ssl_settings:
+    vdom: "{{ vdom }}"
+    vpn_ssl_settings:
+      port: "4433"
+      authentication_rule:
+        -
+          groups:
+            - name: "SSL-GROUP"
+          portal: "sslvpn"
+
+        
+
