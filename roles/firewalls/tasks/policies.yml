@@ -1,0 +1,35 @@
+- name: Configure IPv4 policies
+  fortios_firewall_policy:
+    vdom: "{{ vdom }}"
+    state: "present"
+    firewall_policy: |
+      {
+        "policyid": "{{ item.id }}",
+        "action": "{{ item.action }}",
+        "name": "{{ item.name }}",
+        "logtraffic": "all",
+        "nat": "{{ item.nat }}",
+        "srcintf": [
+          {"name": "{{ item.src_inter }}"}
+        ],
+        "dstintf": [
+          {"name": "{{ item.dest_inter }}"}
+          ],
+        "srcaddr": [
+          {% for srcaddr in item.src_addr %}
+            {"name": "{{ srcaddr }}"}{% if not loop.last %},{% endif %}
+          {% endfor %}
+        ],
+        "dstaddr": [
+          {% for dstaddr in item.dest_addr %}
+            {"name": "{{ dstaddr }}"}{% if not loop.last %},{% endif %}
+          {% endfor %}
+          ],
+        "service": [
+          {% for service in item.services %}
+            {"name": "{{ service }}"}{% if not loop.last %},{% endif %}
+          {% endfor %}
+        ]
+      }
+  with_items: "{{ policy }}"
+  when: policy is defined
