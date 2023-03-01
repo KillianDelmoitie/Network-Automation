@@ -1,0 +1,13 @@
+---
+- name: Configure a static route
+  fortios_router_static:
+    vdom: "{{ vdom }}"
+    state: "present"
+    router_static:
+      gateway: "{{ item.gateway }}"
+      dst: "{{ item.dest_addr }}"
+      distance: "{{ item.distance }}"
+      device: "{{ item.interface }}"
+  with_items: "{{ ip_route }}"
+  when: ip_route is defined
+      
