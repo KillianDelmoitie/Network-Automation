@@ -1,20 +1,46 @@
----
-  
-- name: Create VLAN1 on port1
+- name: Create VLANs on internal2
   fortios_system_interface:
-    host: "192.168.1.99"
-    username: "admin"
-    password: "finalwork"
-    https: "True"
-    ssl_verify: 'False'
-    vdom: "root"
+    enable_log: true
+    state: "present"
     system_interface:
-      state: "present"
-      vdom: root
-      interface: port2
-      type: vlan
-      vlanid: 10
-      name: VLAN10
+      vdom: "{{ vdom }}"
+      interface: "{{ item.interface }}"
+      type: "vlan"
+      vlanid: "{{ item.id }}"
+      name: "{{ item.name }}"
       mode: static
-      ip: "172.16.9.1 255.255.255.0"
-      allowaccess: ['https', 'ping']
+      ip: "{{ item.ip }} {{ item.subnet }}"
+      allowaccess: "{{ item.allowaccess_list }}"
+      role: "lan"
+  with_items: "{{ vlans }}"
+  when: vlans is defined
+
+- name: Configure DHCP server for VLANs
+  fortios_system_dhcp_server:
+    enable_log: true
+    state: present
+    vdom: "{{ vdom }}"
+    system_dhcp_server:
+      id: "{{ item.id }}"
+      interface: "{{ item.interface }}"
+      ip_mode: range
+      default_gateway: "{{ item.default_gateway }}"
+      ip_range:
+        - end_ip: "{{ item.end_ip }}"
+          id: "{{ item.dhcp_id }}"
+          start_ip: "{{ item.start_ip }}"
+  with_items: "{{ dhcp_server }}"
+  when: dhcp_server is defined
+
+- name: Create address object mactching vlan
+  fortios_firewall_address:
+    vdom: "{{ vdom }}"
+    state: present
+    firewall_address:
+      allow_routing: enable
+      interface: "{{ item.name }}"
+      name: "{{ item.name }} address"
+      type: "interface-subnet"
+  with_items: "{{ vlans }}"
+  when: vlans is defined
+
