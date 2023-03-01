@@ -7,6 +7,7 @@
         "policyid": "{{ item.id }}",
         "action": "{{ item.action }}",
         "name": "{{ item.name }}",
+        "schedule": "always",
         "logtraffic": "all",
         "nat": "{{ item.nat }}",
         "srcintf": [
