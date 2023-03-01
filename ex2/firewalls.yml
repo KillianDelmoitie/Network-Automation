@@ -1,23 +1,10 @@
 ---
 - name: Configure Firewalls
   hosts: firewalls
+  gather_facts: no
   connection: httpapi
   collections:
    - fortinet.fortios
-
-
-
-
-  vars:
-   vdom: "root"
-   ansible_httpapi_use_ssl: yes
-   ansible_httpapi_validate_certs: no
-   ansible_httpapi_port: 443
-   
+  roles:
+    - firewalls
   tasks:
-  - name: Configure global attributes.
-    fortios_system_global:
-      vdom:  "{{ vdom }}"
-      system_global:
-        admintimeout: "60"
-        hostname: "FG-ANSIBLE-TEST"
