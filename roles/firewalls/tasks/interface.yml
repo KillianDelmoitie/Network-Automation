@@ -1,0 +1,12 @@
+- name: Configure interfaces
+  fortios_system_interface:
+    enable_log: true
+    state: "present"
+    system_interface:
+      vdom: "{{ vdom }}"
+      name: "{{ item.name }}"
+      mode: static
+      ip: "{{ item.ip_mask }}"
+      allowaccess: "{{ item.allowaccess_list }}"
+  with_items: "{{ interfaces }}"
+  when: interfaces is defined
