@@ -1,0 +1,35 @@
+ansible_host: 192.168.1.99 
+ansible_user: "admin" 
+ansible_password: "finalwork" 
+
+
+hostname: FG_FIREWALL_2
+
+vlans:
+  - interface: internal2
+    id: 11
+    name: VLAN11
+    ip: "172.16.11.1 255.255.255.0"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "ssh"
+    - "http"
+  - interface: internal2
+    id: 12
+    name: VLAN12
+    ip: "172.16.12.1 255.255.255.0"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "ssh"
+    - "http"
+  - interface: internal2
+    id: 99
+    name: VLAN99
+    ip: "192.168.99.1 255.255.255.0"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "ssh"
+    - "http"

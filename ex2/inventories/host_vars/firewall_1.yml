@@ -1,0 +1,70 @@
+ansible_host: 192.168.1.99 
+ansible_user: "admin" 
+ansible_password: "finalwork" 
+
+
+hostname: FG_FIREWALL_1
+
+vlans:
+  - interface: internal2
+    id: 9
+    name: VLAN9
+    ip: "172.16.9.1" 
+    subnet: "255.255.255.0"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "ssh"
+    - "http"
+  - interface: internal2
+    id: 10
+    name: VLAN10
+    ip: "172.16.10.1" 
+    subnet: "255.255.255.0"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "ssh"
+    - "http"
+  - interface: internal2
+    id: 99
+    name: VLAN99
+    ip: "192.168.99.1" 
+    subnet: "255.255.255.0"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "ssh"
+    - "http"
+
+dhcp_server:
+  - id: 1 
+    interface: VLAN9
+    default_gateway: "172.16.9.1"
+    dhcp_id: 1
+    start_ip: "172.16.9.2"
+    end_ip: "172.16.9.254"
+  - id: 2 
+    interface: VLAN10
+    default_gateway: "172.16.10.1"
+    dhcp_id: 2
+    start_ip: "172.16.10.2"
+    end_ip: "172.16.10.254"
+
+policy:
+  - id: 1
+    action: "accept"
+    name: "VLAN 99->VLAN9"
+    nat: disable
+    src_inter: "VLAN99"
+    dest_inter: "VLAN9"
+    src_addr: 
+    - "VLAN99 address"
+    dest_addr: 
+    - "VLAN9 address"
+    services: 
+    - "SSH"
+    - "PING"
+    - "HTTPS"
+
+
