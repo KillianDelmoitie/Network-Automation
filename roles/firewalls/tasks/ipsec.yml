@@ -1,0 +1,36 @@
+- name: Configure IPSEC VPN phase 1
+  fortios_vpn_ipsec_phase1_interface:
+    vdom: "{{ vdom }}"
+    state: "present"
+    vpn_ipsec_phase1_interface:
+      name: "{{ item.name }}"
+      remote_gw: "{{ item.remote_gw }}"
+      interface: "wan1"
+      nattraversal: "enable"
+      authmethod: "psk"
+      psksecret: "{{ item.psk_secret }}"
+      ike_version: "2"
+      proposal: "aes256-sha256"
+      dhgrp: "14"
+  with_items: "{{ ipsec_ph1 }}"
+  when: ipsec_ph1 is defined
+
+- name: Configure IPSEC VPN phase2
+  fortios_vpn_ipsec_phase2_interface:
+    vdom: "{{ vdom }}"
+    state: "present"
+    vpn_ipsec_phase2_interface:
+      phase1name: "{{ item.nameph1 }}"
+      name: "{{ item.name }}"
+      proposal: "aes256-sha256"
+      dhgrp: "14"
+      src_addr_type: "subnet"
+      src_subnet: "{{ item.local_addr }}"
+      dst_addr_type: "subnet"
+      dst_subnet: "{{ item.remote_addr }}"
+  with_items: "{{ ipsec_ph2 }}"
+  when: ipsec_ph2 is defined
+
+
+
+
