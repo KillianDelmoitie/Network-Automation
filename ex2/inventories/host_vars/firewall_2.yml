@@ -2,8 +2,34 @@ ansible_host: 192.168.1.99
 ansible_user: "admin" 
 ansible_password: "finalwork" 
 
-
+#Configure hostname
+# hostname: NAME
 hostname: FG_FIREWALL_2
+
+#Configure Static routes
+# ip_route:
+#   - gateway: "IP"
+#     dest_addr: "IP/MASK"
+#     distance: INTEGER
+#     interface: "INTERFACE"
+
+ip_route:
+  - gateway: "0.0.0.0"
+    dest_addr: "0.0.0.0/0"
+    distance: 10
+    interface: "wan1"
+  - gateway: "0.0.0.0"
+    dest_addr: "172.16.11.0/24"
+    distance: 5
+    interface: "VPN-TUNNEL"
+
+#interface configuration, assign an IP and create an allowlist
+# interfaces:
+#   - name: INTERFACE
+#     ip_mask: "IP/MASK"
+#     allowaccess_list: 
+#     - "protocol (lowercase)" 
+#     - "ping"
 
 interfaces:
   - name: wan2
@@ -15,10 +41,23 @@ interfaces:
     - "ssh"
     - "http"
 
+#IPsec phase 1 configuration
+# ipsec_ph1:
+#   - name: "VPN NAME"
+#     remote_gw: "GW IP"
+#     psk_secret: "PSK PASSWORD"
+
 ipsec_ph1:
   - name: "VPN-TUNNEL"
     remote_gw: "193.190.200.1"
     psk_secret: "ExamenNetworkSecurity"
+
+#Configure the local and remote addresses (phase 2)
+# ipsec_ph2:
+#   - nameph1: "NAME PH1 TUNNEL"
+#     name: "NAME of PH2"
+#     local_addr: "IP/MASK"
+#     remote_addr: "IP/MASK"
 
 ipsec_ph2:
   - nameph1: "VPN-TUNNEL"
@@ -29,6 +68,16 @@ ipsec_ph2:
     name: "VLAN 11-9"
     local_addr: "172.16.11.0/24"
     remote_addr: "172.16.10.0/24"
+
+#Create VLANS with allow_list
+# vlans:
+#   - interface: INTERFACE
+#     id: VLAN_ID
+#     name: VLAN_NAME
+#     ip: "IP" 
+#     subnet: "SUBNET"
+#     allowaccess_list: 
+#     - "protocol (lowercase)" 
 
 vlans:
   - interface: internal2
@@ -62,6 +111,26 @@ vlans:
     - "ssh"
     - "http"
 
+#Create additional address objects
+# addr_obj:
+#   - name: "NAME ADDRESS"
+#     subnet: "IP/MASK"
+
+addr_obj:
+  - name: "VLAN9 address"
+    subnet: "172.16.9.0/24"
+  - name: "VLAN10 address"
+    subnet: "172.16.10.0/24"
+
+#Create DPCH servers of certain interfaces
+# dhcp_server:
+#   - id: INTEGER 
+#     interface: INTERFACE
+#     default_gateway: "IP"
+#     dhcp_id: INTEGER
+#     start_ip: "start_ip"
+#     end_ip: "end_ip"
+
 dhcp_server:
   - id: 1 
     interface: VLAN11
@@ -76,6 +145,20 @@ dhcp_server:
     start_ip: "172.16.12.2"
     end_ip: "172.16.12.254"
 
+#Create policys
+# policy:
+#   - id: INTEGER
+#     action: "accept/deny"
+#     name: "NAME POLICY"
+#     nat: disable/enable
+#     src_inter: "SOURCE INTERFACe"
+#     dest_inter: "DESTINATION INTERFACE"
+#     src_addr: 
+#     - "Source Address Object"
+#     dest_addr: 
+#     - "Destination Address Object"
+#     services: 
+#     - "PROTOCOL (CAPITAL)"
 
 policy:
   - id: 1
@@ -138,3 +221,38 @@ policy:
     - "all"
     services: 
     - "ALL"
+  - id: 6
+    action: "accept"
+    name: "VLAN11->TUNNEL"
+    nat: enable
+    src_inter: "internal"
+    dest_inter: "VPN-TUNNEL"
+    src_addr:
+    - "VLAN11 address" 
+    dest_addr:
+    - "VLAN9 address"
+    - "VLAN10 address"
+    services: 
+    - "ALL_ICMP"
+    - "RDP"
+    - "SSH"
+    - "SMB"
+  - id: 7
+    action: "accept"
+    name: "TUNNEL->VLAN11"
+    nat: enable
+    src_inter: "VPN-TUNNEL"
+    dest_inter: "internal"
+    src_addr: 
+    - "VLAN9 address"
+    - "VLAN10 address"
+    dest_addr:
+    - "VLAN11 address"
+    services: 
+    - "ALL_ICMP"
+    - "RDP"
+    - "SSH"
+    - "SMB"
+
+#To configure an SSL_VPN 
+# SSL_VPN: true
