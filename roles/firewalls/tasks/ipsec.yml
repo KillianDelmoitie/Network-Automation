@@ -1,3 +1,5 @@
+#Configure the ipsec VPN in 2 phases
+---
 - name: Configure IPSEC VPN phase 1
   fortios_vpn_ipsec_phase1_interface:
     vdom: "{{ vdom }}"

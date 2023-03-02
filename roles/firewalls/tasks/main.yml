@@ -1,11 +1,22 @@
 ---
 # # tasks file for firewalls
+# All scripts depend on the available variables in the host_vars or group_vars file of the host
+
+
+#Configure the global settings
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/settings.yml
+#Configure an ip on a certain interface
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/interface.yml
+#Add vlans to an interface + config DHCP on an interface if needed + create address groups accordingly
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/vlan.yml
+#Create address objects
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/address_obj.yml
+#Make an IPsec VPN tunnel
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/ipsec.yml
+#Create an SSL VPN
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/ssl.yml
+#Create all needed policies 
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/policies.yml
+#Create static routes
 - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/static.yml
 

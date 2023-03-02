@@ -1,3 +1,5 @@
+# Configure the hostname and timezone
+# Possibility to configure DNS primary and secondary IP
 ---
 - name: Configure global attributes
   fortios_system_global:

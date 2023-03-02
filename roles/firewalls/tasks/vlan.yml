@@ -1,4 +1,8 @@
-- name: Create VLANs on internal2
+# Create the different VLANs on an interface
+# Configure DCP on those VLANs if needed
+# Create address groups accordingly
+---
+- name: Create VLANs on an interface
   fortios_system_interface:
     enable_log: true
     state: "present"

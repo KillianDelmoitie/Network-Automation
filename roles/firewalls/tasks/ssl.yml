@@ -1,3 +1,8 @@
+#Create an SSL VPN:
+# - Configure the SSL VPN
+# - Create a User with password
+# - Create a group with that member in it
+# - Configure the SSL settings and put it online
 ---
 - name: Configure VPN SSL portal
   fortios_vpn_ssl_web_portal:
@@ -11,6 +16,7 @@
         - name: "SSLVPN_TUNNEL_ADDR1"
       web_mode: "enable"
       heading: "SSL-VPN Portal"
+  when: SSL_VPN is true
 
 - name: Create User
   fortios_user_local:
@@ -19,6 +25,7 @@
     user_local:
       name: "SSLADMIN"
       passwd: "ssladmin"
+  when: SSL_VPN is true
 
 
 - name: Create group for all SSL-Users
@@ -30,6 +37,7 @@
       group_type: "firewall"
       member:
         - name: "SSLADMIN"
+  when: SSL_VPN is true
 
 - name: Configure VPN SSL settings
   fortios_vpn_ssl_settings:
@@ -60,6 +68,7 @@
           groups:
             - name: "SSL-GROUP"
           portal: "sslvpn"
+  when: SSL_VPN is true
 
               
 

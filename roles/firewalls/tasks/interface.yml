@@ -1,3 +1,4 @@
+#Configure an interface on the firewall assign which protocols he can have only if interfaces is defined
 - name: Configure interfaces
   fortios_system_interface:
     enable_log: true

@@ -1,3 +1,4 @@
+# Create static routes when ip_route is accessible
 ---
 - name: Configure a static route
   fortios_router_static:

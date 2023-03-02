@@ -1,3 +1,6 @@
+#Add policies to your firewall, all interfaces or addresses are lists, so you can itterate over them. 
+#Another function to add the SSL-group when there is an SSL present
+---
 - name: Configure IPv4 policies
   fortios_firewall_policy:
     vdom: "{{ vdom }}"
@@ -46,3 +49,5 @@
           {"name": "SSL-GROUP"}
         ]
       }
+  when: SSL_VPN is true
+  

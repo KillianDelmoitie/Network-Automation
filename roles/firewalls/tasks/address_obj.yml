@@ -1,3 +1,4 @@
+# Create an address object into your firewall. Only if addr_obj is defined
 ---
 - name: Create address object
   fortios_firewall_address:
