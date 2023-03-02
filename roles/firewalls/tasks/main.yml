@@ -1,4 +1,11 @@
 ---
-# tasks file for firewalls
-# - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/settings.yml
- - include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/vlan.yml
+# # tasks file for firewalls
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/settings.yml
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/interface.yml
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/vlan.yml
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/address_obj.yml
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/ipsec.yml
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/ssl.yml
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/policies.yml
+- include_tasks: /home/killian/Network-Automation/roles/firewalls/tasks/static.yml
+
