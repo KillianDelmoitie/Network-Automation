@@ -1,3 +1,0 @@
-ansible-galaxy collection install cisco.ios
-ansible-galaxy collection install ansible.netcommon
-
