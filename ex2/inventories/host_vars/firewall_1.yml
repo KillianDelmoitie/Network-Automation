@@ -5,6 +5,47 @@ ansible_password: "finalwork"
 
 hostname: FG_FIREWALL_1
 
+
+
+ip_route:
+  - gateway: "0.0.0.0"
+    dest_addr: "0.0.0.0/0"
+    distance: 10
+    interface: "wan1"
+  - gateway: "0.0.0.0"
+    dest_addr: "172.16.9.0/24"
+    distance: 5
+    interface: "VPN-TUNNEL"
+  - gateway: "0.0.0.0"
+    dest_addr: "172.16.10.0/24"
+    distance: 5
+    interface: "VPN-TUNNEL"
+
+interfaces:
+  - name: wan2
+    ip_mask: "193.190.200.1/30"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "http"
+    - "ssh"
+    - "http"
+
+ipsec_ph1:
+  - name: "VPN-TUNNEL"
+    remote_gw: "193.190.200.6"
+    psk_secret: "ExamenNetworkSecurity"
+
+ipsec_ph2:
+  - nameph1: "VPN-TUNNEL"
+    name: "VLAN 9-11"
+    local_addr: "172.16.9.0/24"
+    remote_addr: "172.16.11.0/24"
+  - nameph1: "VPN-TUNNEL"
+    name: "VLAN 10-11"
+    local_addr: "172.16.10.0/24"
+    remote_addr: "172.16.11.0/24"
+
 vlans:
   - interface: internal2
     id: 9
@@ -37,6 +78,12 @@ vlans:
     - "ssh"
     - "http"
 
+addr_obj:
+  - name: "VLAN 11 address"
+    subnet: "172.16.11.0/24"
+  - name: "VLAN 12 address"
+    subnet: "172.16.12.0/24"
+
 dhcp_server:
   - id: 1 
     interface: VLAN9
@@ -52,19 +99,122 @@ dhcp_server:
     end_ip: "172.16.10.254"
 
 policy:
-  - id: 1
+  # - id: 1
+  #   action: "accept"
+  #   name: "VLAN 99->VLAN9"
+  #   nat: disable
+  #   src_inter: "VLAN99"
+  #   dest_inter: "VLAN9"
+  #   src_addr: 
+  #   - "VLAN99 address"
+  #   dest_addr: 
+  #   - "VLAN9 address"
+  #   services: 
+  #   - "SSH"
+  # - id: 2
+  #   action: "accept"
+  #   name: "VLAN 9->VLAN99"
+  #   nat: disable
+  #   src_inter: "VLAN9"
+  #   dest_inter: "VLAN99"
+  #   src_addr: 
+  #   - "VLAN9 address"
+  #   dest_addr: 
+  #   - "VLAN99 address"
+  #   services: 
+  #   - "SSH"
+  # - id: 3
+  #   action: "accept"
+  #   name: "VLAN 9->VLAN10"
+  #   nat: disable
+  #   src_inter: "VLAN9"
+  #   dest_inter: "VLAN10"
+  #   src_addr: 
+  #   - "VLAN9 address"
+  #   dest_addr: 
+  #   - "VLAN10 address"
+  #   services: 
+  #   - "PING"
+  # - id: 4
+  #   action: "accept"
+  #   name: "VLAN 10->VLAN9"
+  #   nat: disable
+  #   src_inter: "VLAN10"
+  #   dest_inter: "VLAN9"
+  #   src_addr: 
+  #   - "VLAN10 address"
+  #   dest_addr: 
+  #   - "VLAN9 address"
+  #   services: 
+  #   - "PING"
+  # - id: 5
+  #   action: "accept"
+  #   name: "internal->WAN"
+  #   nat: enable
+  #   src_inter: "internal"
+  #   dest_inter: "wan1"
+  #   src_addr: 
+  #   - "internal"
+  #   dest_addr: 
+  #   - "all"
+  #   services: 
+  #   - "ALL"
+  - id: 6
     action: "accept"
-    name: "VLAN 99->VLAN9"
+    name: "VLAN9_10->TUNNEL"
+    nat: enable
+    src_inter: "internal"
+    dest_inter: "VPN-TUNNEL"
+    src_addr: 
+    - "VLAN9 address"
+    - "VLAN10 address"
+    dest_addr:
+    - "VLAN 11 address"
+    services: 
+    - "ALL_ICMP"
+    - "RDP"
+    - "SSH"
+    - "SMB"
+  - id: 7
+    action: "accept"
+    name: "TUNNEL->VLAN9-10"
+    nat: enable
+    src_inter: "VPN-TUNNEL"
+    dest_inter: "internal"
+    src_addr: 
+    - "VLAN 11 address"
+    dest_addr:
+    - "VLAN9 address"
+    - "VLAN10 address"
+    services: 
+    - "ALL_ICMP"
+    - "RDP"
+    - "SSH"
+    - "SMB"
+  - id: 8
+    action: "accept"
+    name: "sslvpn access vlan 9"
     nat: disable
-    src_inter: "VLAN99"
+    src_inter: "ssl.root"
     dest_inter: "VLAN9"
     src_addr: 
-    - "VLAN99 address"
-    dest_addr: 
+    - "SSLVPN_TUNNEL_ADDR1"
+    dest_addr:
     - "VLAN9 address"
     services: 
-    - "SSH"
-    - "PING"
-    - "HTTPS"
+    - "ALL"
+  - id: 9
+    action: "accept"
+    name: "VLAN 9->WAN"
+    nat: enable
+    src_inter: "VLAN9"
+    dest_inter: "wan1"
+    src_addr: 
+    - "VLAN9 address"
+    dest_addr:
+    - "all"
+    services: 
+    - "ALL"
+
 
 

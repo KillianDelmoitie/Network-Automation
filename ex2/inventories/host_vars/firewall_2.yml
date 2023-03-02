@@ -5,11 +5,37 @@ ansible_password: "finalwork"
 
 hostname: FG_FIREWALL_2
 
+interfaces:
+  - name: wan2
+    ip_mask: "193.190.200.6/30"
+    allowaccess_list: 
+    - "https" 
+    - "ping"
+    - "http"
+    - "ssh"
+    - "http"
+
+ipsec_ph1:
+  - name: "VPN-TUNNEL"
+    remote_gw: "193.190.200.1"
+    psk_secret: "ExamenNetworkSecurity"
+
+ipsec_ph2:
+  - nameph1: "VPN-TUNNEL"
+    name: "VLAN 11-9"
+    local_addr: "172.16.11.0/24"
+    remote_addr: "172.16.9.0/24"
+  - nameph1: "VPN-TUNNEL"
+    name: "VLAN 11-9"
+    local_addr: "172.16.11.0/24"
+    remote_addr: "172.16.10.0/24"
+
 vlans:
   - interface: internal2
     id: 11
     name: VLAN11
-    ip: "172.16.11.1 255.255.255.0"
+    ip: "172.16.11.1"
+    subnet: "255.255.255.0"
     allowaccess_list: 
     - "https" 
     - "ping"
@@ -18,7 +44,8 @@ vlans:
   - interface: internal2
     id: 12
     name: VLAN12
-    ip: "172.16.12.1 255.255.255.0"
+    ip: "172.16.12.1"
+    subnet: "255.255.255.0"
     allowaccess_list: 
     - "https" 
     - "ping"
@@ -27,9 +54,87 @@ vlans:
   - interface: internal2
     id: 99
     name: VLAN99
-    ip: "192.168.99.1 255.255.255.0"
+    ip: "192.168.99.1"
+    subnet: "255.255.255.0"
     allowaccess_list: 
     - "https" 
     - "ping"
     - "ssh"
     - "http"
+
+dhcp_server:
+  - id: 1 
+    interface: VLAN11
+    default_gateway: "172.16.11.1"
+    dhcp_id: 1
+    start_ip: "172.16.11.2"
+    end_ip: "172.16.11.254"
+  - id: 2 
+    interface: VLAN12
+    default_gateway: "172.16.12.1"
+    dhcp_id: 2
+    start_ip: "172.16.12.2"
+    end_ip: "172.16.12.254"
+
+
+policy:
+  - id: 1
+    action: "accept"
+    name: "VLAN 99->VLAN11"
+    nat: disable
+    src_inter: "VLAN99"
+    dest_inter: "VLAN11"
+    src_addr: 
+    - "VLAN99 address"
+    dest_addr: 
+    - "VLAN11 address"
+    services: 
+    - "SSH"
+  - id: 2
+    action: "accept"
+    name: "VLAN 11->VLAN99"
+    nat: disable
+    src_inter: "VLAN11"
+    dest_inter: "VLAN99"
+    src_addr: 
+    - "VLAN11 address"
+    dest_addr: 
+    - "VLAN99 address"
+    services: 
+    - "SSH"
+  - id: 3
+    action: "accept"
+    name: "VLAN 11->VLAN12"
+    nat: disable
+    src_inter: "VLAN11"
+    dest_inter: "VLAN12"
+    src_addr: 
+    - "VLAN11 address"
+    dest_addr: 
+    - "VLAN12 address"
+    services: 
+    - "ALL"
+  - id: 4
+    action: "accept"
+    name: "VLAN 12->VLAN11"
+    nat: disable
+    src_inter: "VLAN12"
+    dest_inter: "VLAN11"
+    src_addr: 
+    - "VLAN12 address"
+    dest_addr: 
+    - "VLAN11 address"
+    services: 
+    - "ALL"
+  - id: 5
+    action: "accept"
+    name: "internal->WAN"
+    nat: enable
+    src_inter: "internal"
+    dest_inter: "wan1"
+    src_addr: 
+    - "internal"
+    dest_addr: 
+    - "all"
+    services: 
+    - "ALL"
