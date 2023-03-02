@@ -34,3 +34,15 @@
       }
   with_items: "{{ policy }}"
   when: policy is defined
+
+- name: Add SSL-group policy
+  fortios_firewall_policy:
+    vdom: "{{ vdom }}"
+    state: "present"
+    firewall_policy: |
+      {
+        "policyid": "8",
+        "groups": [
+          {"name": "SSL-GROUP"}
+        ]
+      }

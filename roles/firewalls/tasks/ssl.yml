@@ -17,8 +17,8 @@
     vdom: "{{ vdom }}"
     state: "present"
     user_local:
-      name: "test"
-      passwd: "ssltest"
+      name: "SSLADMIN"
+      passwd: "ssladmin"
 
 
 - name: Create group for all SSL-Users
@@ -29,18 +29,39 @@
       name: "SSL-GROUP"
       group_type: "firewall"
       member:
-        - name: "test"
+        - name: "SSLADMIN"
 
 - name: Configure VPN SSL settings
   fortios_vpn_ssl_settings:
     vdom: "{{ vdom }}"
     vpn_ssl_settings:
+      source_interface:
+         -
+            name: "wan1"
       port: "4433"
+      servercert: "Fortinet_Factory"
+      idle_timeout: "300"
+      default_portal: "web-access"
+      tunnel_ip_pools:
+         -
+            name: "SSLVPN_TUNNEL_ADDR1"
+      tunnel_ipv6_pools:
+         -
+            name: "SSLVPN_TUNNEL_IPv6_ADDR1"
+      source_address:
+         -
+            name: "all"
+      source_address6:
+         -
+            name: "all"
+
       authentication_rule:
         -
           groups:
             - name: "SSL-GROUP"
           portal: "sslvpn"
+
+              
 
         
 
