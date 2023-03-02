@@ -1,6 +1,0 @@
----
-- name: Configure global attributes.
-  fortios_system_global:
-    vdom:  "{{ vdom }}"
-    system_global:
-      hostname: "{{ hostname }}"

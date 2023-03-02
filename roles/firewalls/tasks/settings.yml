@@ -1,5 +1,27 @@
-- name: Configure system settings
+---
+- name: Configure global attributes
   fortios_system_global:
-    hostname: "FW1"
-    timezone: "Europe/London"
+    vdom:  "{{ vdom }}"
+    system_global:
+      hostname: "{{ hostname }}"
+      timezone: "28"
+  when: hostname is defined
+
+
+# AUTOMATIC IS IDEAL FOR EX2 
+# - name: Configure DNS primary
+#   fortios_system_dns:
+#     vdom:  "{{ vdom }}"
+#     system_dns:
+#       alt_primary: "{{ DNS_primary }}"
+#       interface_select_method: "specify"
+#   when: DNS_primary is defined
+
+# - name: Configure DNS secondary
+#   fortios_system_dns:
+#     vdom:  "{{ vdom }}"
+#     system_dns:
+#       alt_secondary: "{{ DNS_secondary }}"
+#   when: DNS_secondary is defined
+  
   
