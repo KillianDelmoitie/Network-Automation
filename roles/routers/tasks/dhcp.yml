@@ -35,6 +35,7 @@
     - interface {{ item }}
     lines:
       - ip address dhcp
+      - no shutdown
     parents: interface {{ item }}
   with_items: "{{ ip_a_DHCP }}"
   when: ip_a_DHCP is defined

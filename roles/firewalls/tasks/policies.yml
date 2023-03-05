@@ -44,7 +44,7 @@
     state: "present"
     firewall_policy: |
       {
-        "policyid": "8",
+        "policyid": "18",
         "groups": [
           {"name": "SSL-GROUP"}
         ]
