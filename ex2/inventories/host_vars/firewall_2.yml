@@ -32,7 +32,7 @@ ip_route:
 #     - "ping"
 
 interfaces:
-  - name: wan2
+  - name: wan1
     ip_mask: "193.190.200.6/30"
     allowaccess_list: 
     - "https" 
@@ -132,16 +132,16 @@ addr_obj:
 #     end_ip: "end_ip"
 
 dhcp_server:
-  - id: 1 
+  - id: 1
     interface: VLAN11
     default_gateway: "172.16.11.1"
-    dhcp_id: 1
+    dhcp_id: 2
     start_ip: "172.16.11.2"
     end_ip: "172.16.11.254"
-  - id: 2 
+  - id: 2
     interface: VLAN12
     default_gateway: "172.16.12.1"
-    dhcp_id: 2
+    dhcp_id: 3
     start_ip: "172.16.12.2"
     end_ip: "172.16.12.254"
 
@@ -161,7 +161,7 @@ dhcp_server:
 #     - "PROTOCOL (CAPITAL)"
 
 policy:
-  - id: 1
+  - id: 11
     action: "accept"
     name: "VLAN 99->VLAN11"
     nat: disable
@@ -173,7 +173,7 @@ policy:
     - "VLAN11 address"
     services: 
     - "SSH"
-  - id: 2
+  - id: 12
     action: "accept"
     name: "VLAN 11->VLAN99"
     nat: disable
@@ -185,7 +185,7 @@ policy:
     - "VLAN99 address"
     services: 
     - "SSH"
-  - id: 3
+  - id: 13
     action: "accept"
     name: "VLAN 11->VLAN12"
     nat: disable
@@ -197,7 +197,7 @@ policy:
     - "VLAN12 address"
     services: 
     - "ALL"
-  - id: 4
+  - id: 14
     action: "accept"
     name: "VLAN 12->VLAN11"
     nat: disable
@@ -209,7 +209,7 @@ policy:
     - "VLAN11 address"
     services: 
     - "ALL"
-  - id: 5
+  - id: 15
     action: "accept"
     name: "internal->WAN"
     nat: enable
@@ -221,11 +221,11 @@ policy:
     - "all"
     services: 
     - "ALL"
-  - id: 6
+  - id: 16
     action: "accept"
     name: "VLAN11->TUNNEL"
-    nat: enable
-    src_inter: "internal"
+    nat: disable
+    src_inter: "VLAN11"
     dest_inter: "VPN-TUNNEL"
     src_addr:
     - "VLAN11 address" 
@@ -237,12 +237,12 @@ policy:
     - "RDP"
     - "SSH"
     - "SMB"
-  - id: 7
+  - id: 17
     action: "accept"
     name: "TUNNEL->VLAN11"
-    nat: enable
+    nat: disable
     src_inter: "VPN-TUNNEL"
-    dest_inter: "internal"
+    dest_inter: "VLAN11"
     src_addr: 
     - "VLAN9 address"
     - "VLAN10 address"

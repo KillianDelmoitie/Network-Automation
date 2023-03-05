@@ -34,10 +34,6 @@ clockrate:
   # mask: MASK
   # next_hop: IP
 
-ip_routes:
-  - dest: "0.0.0.0"
-    mask: 0
-    next_hop: FastEthernet0/1
 
 #INTERVLAN ROUTING#
 ##TEMPLATE##

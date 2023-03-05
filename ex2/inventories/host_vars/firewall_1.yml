@@ -36,7 +36,7 @@ ip_route:
 #     - "ping"
 
 interfaces:
-  - name: wan2
+  - name: wan1
     ip_mask: "193.190.200.1/30"
     allowaccess_list: 
     - "https" 
@@ -136,16 +136,16 @@ addr_obj:
 #     end_ip: "end_ip"
 
 dhcp_server:
-  - id: 1 
+  - id: 1
     interface: VLAN9
     default_gateway: "172.16.9.1"
-    dhcp_id: 1
+    dhcp_id: 2
     start_ip: "172.16.9.2"
     end_ip: "172.16.9.254"
-  - id: 2 
+  - id: 2
     interface: VLAN10
     default_gateway: "172.16.10.1"
-    dhcp_id: 2
+    dhcp_id: 3
     start_ip: "172.16.10.2"
     end_ip: "172.16.10.254"
 
@@ -165,7 +165,7 @@ dhcp_server:
 #     - "PROTOCOL (CAPITAL)"
 
 policy:
-  - id: 1
+  - id: 11
     action: "accept"
     name: "VLAN 99->VLAN9"
     nat: disable
@@ -177,7 +177,7 @@ policy:
     - "VLAN9 address"
     services: 
     - "SSH"
-  - id: 2
+  - id: 12
     action: "accept"
     name: "VLAN 9->VLAN99"
     nat: disable
@@ -189,7 +189,7 @@ policy:
     - "VLAN99 address"
     services: 
     - "SSH"
-  - id: 3
+  - id: 13
     action: "accept"
     name: "VLAN 9->VLAN10"
     nat: disable
@@ -201,7 +201,7 @@ policy:
     - "VLAN10 address"
     services: 
     - "PING"
-  - id: 4
+  - id: 14
     action: "accept"
     name: "VLAN 10->VLAN9"
     nat: disable
@@ -213,7 +213,7 @@ policy:
     - "VLAN9 address"
     services: 
     - "PING"
-  - id: 5
+  - id: 15
     action: "accept"
     name: "internal->WAN"
     nat: enable
@@ -225,14 +225,28 @@ policy:
     - "all"
     services: 
     - "ALL"
-  - id: 6
+  - id: 16
     action: "accept"
-    name: "VLAN9_10->TUNNEL"
-    nat: enable
-    src_inter: "internal"
+    name: "VLAN9->TUNNEL"
+    nat: disable
+    src_inter: "VLAN9"
     dest_inter: "VPN-TUNNEL"
     src_addr: 
     - "VLAN9 address"
+    dest_addr:
+    - "VLAN11 address"
+    services: 
+    - "ALL_ICMP"
+    - "RDP"
+    - "SSH"
+    - "SMB"
+  - id: 20
+    action: "accept"
+    name: "VLAN10->TUNNEL"
+    nat: disable
+    src_inter: "VLAN10"
+    dest_inter: "VPN-TUNNEL"
+    src_addr: 
     - "VLAN10 address"
     dest_addr:
     - "VLAN11 address"
@@ -241,23 +255,37 @@ policy:
     - "RDP"
     - "SSH"
     - "SMB"
-  - id: 7
+  - id: 17
     action: "accept"
-    name: "TUNNEL->VLAN9-10"
-    nat: enable
+    name: "TUNNEL->VLAN9"
+    nat: disable
     src_inter: "VPN-TUNNEL"
-    dest_inter: "internal"
+    dest_inter: "VLAN9"
     src_addr: 
     - "VLAN11 address"
     dest_addr:
     - "VLAN9 address"
+    services: 
+    - "ALL_ICMP"
+    - "RDP"
+    - "SSH"
+    - "SMB"
+  - id: 21
+    action: "accept"
+    name: "TUNNEL->VLAN10"
+    nat: disable
+    src_inter: "VPN-TUNNEL"
+    dest_inter: "VLAN9"
+    src_addr: 
+    - "VLAN11 address"
+    dest_addr:
     - "VLAN10 address"
     services: 
     - "ALL_ICMP"
     - "RDP"
     - "SSH"
     - "SMB"
-  - id: 8
+  - id: 18
     action: "accept"
     name: "sslvpn access vlan 9"
     nat: disable
@@ -269,7 +297,7 @@ policy:
     - "VLAN9 address"
     services: 
     - "ALL"
-  - id: 9
+  - id: 19
     action: "accept"
     name: "VLAN 9->WAN"
     nat: enable

@@ -1,4 +1,4 @@
-ansible_host: 192.168.99.11
+ansible_host: 192.168.99.21
 ansible_user: "admin" 
 ansible_become_password: admin
 ansible_ssh_pass: admin
@@ -48,7 +48,7 @@ access_interfaces:
 
 ip_assignement:
   Vlan99:
-      ip_address: "192.168.99.11 255.255.255.0" 
+      ip_address: "192.168.99.21 255.255.255.0" 
 
 #Configure default_gateway
 #TEMPLATE#
