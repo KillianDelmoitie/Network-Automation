@@ -28,6 +28,7 @@
       id: "{{ item.id }}"
       interface: "{{ item.interface }}"
       ip_mode: range
+      netmask: "{{ item.netmask }}"
       default_gateway: "{{ item.default_gateway }}"
       ip_range:
         - end_ip: "{{ item.end_ip }}"

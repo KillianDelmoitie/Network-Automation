@@ -65,7 +65,7 @@ ipsec_ph2:
     local_addr: "172.16.11.0/24"
     remote_addr: "172.16.9.0/24"
   - nameph1: "VPN-TUNNEL"
-    name: "VLAN 11-9"
+    name: "VLAN 11-10"
     local_addr: "172.16.11.0/24"
     remote_addr: "172.16.10.0/24"
 
@@ -133,14 +133,23 @@ addr_obj:
 
 dhcp_server:
   - id: 1
+    interface: internal
+    default_gateway: "192.168.1.99"
+    netmask: "255.255.255.0"
+    dhcp_id: 1
+    start_ip: "192.168.1.110"
+    end_ip: "192.168.1.210"
+  - id: 2
     interface: VLAN11
     default_gateway: "172.16.11.1"
+    netmask: "255.255.255.0"
     dhcp_id: 2
     start_ip: "172.16.11.2"
     end_ip: "172.16.11.254"
-  - id: 2
+  - id: 3
     interface: VLAN12
     default_gateway: "172.16.12.1"
+    netmask: "255.255.255.0"
     dhcp_id: 3
     start_ip: "172.16.12.2"
     end_ip: "172.16.12.254"
