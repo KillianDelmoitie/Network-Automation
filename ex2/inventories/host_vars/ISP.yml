@@ -12,3 +12,14 @@ ip_config:
   FastEthernet0/1:
       ip: "193.190.200.5"
       subnet: "255.255.255.252"
+
+ospf_processes:
+  - process_id: 1
+    router_id: 1.1.1.1
+    network:
+      - address: 193.190.200.0
+        wildcard_bits: 0.0.0.3
+        area: 0
+      - address: 193.190.200.4
+        wildcard_bits: 0.0.0.3
+        area: 0
