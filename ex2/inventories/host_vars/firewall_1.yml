@@ -43,7 +43,6 @@ interfaces:
     - "ping"
     - "http"
     - "ssh"
-    - "http"
 
 #IPsec phase 1 configuration
 # ipsec_ph1:
