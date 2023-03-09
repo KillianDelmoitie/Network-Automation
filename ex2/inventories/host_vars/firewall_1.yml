@@ -19,11 +19,7 @@ ip_route:
     distance: 10
     interface: "wan1"
   - gateway: "0.0.0.0"
-    dest_addr: "172.16.9.0/24"
-    distance: 5
-    interface: "VPN-TUNNEL"
-  - gateway: "0.0.0.0"
-    dest_addr: "172.16.10.0/24"
+    dest_addr: "172.16.11.0/24"
     distance: 5
     interface: "VPN-TUNNEL"
 
@@ -142,11 +138,11 @@ dhcp_server:
     dhcp_id: 1
     start_ip: "192.168.1.110"
     end_ip: "192.168.1.210"
-  - id: 2
+  - id: 4
     interface: VLAN9
     default_gateway: "172.16.9.1"
     netmask: "255.255.255.0"
-    dhcp_id: 2
+    dhcp_id: 4
     start_ip: "172.16.9.2"
     end_ip: "172.16.9.254"
   - id: 3
@@ -303,18 +299,6 @@ policy:
     - "SSLVPN_TUNNEL_ADDR1"
     dest_addr:
     - "VLAN9 address"
-    services: 
-    - "ALL"
-  - id: 19
-    action: "accept"
-    name: "VLAN 9->WAN"
-    nat: enable
-    src_inter: "VLAN9"
-    dest_inter: "wan1"
-    src_addr: 
-    - "VLAN9 address"
-    dest_addr:
-    - "all"
     services: 
     - "ALL"
 

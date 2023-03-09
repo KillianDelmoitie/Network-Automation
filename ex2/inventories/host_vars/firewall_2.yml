@@ -19,7 +19,11 @@ ip_route:
     distance: 10
     interface: "wan1"
   - gateway: "0.0.0.0"
-    dest_addr: "172.16.11.0/24"
+    dest_addr: "172.16.10.0/24"
+    distance: 5
+    interface: "VPN-TUNNEL"
+  - gateway: "0.0.0.0"
+    dest_addr: "172.16.9.0/24"
     distance: 5
     interface: "VPN-TUNNEL"
 
@@ -262,6 +266,18 @@ policy:
     - "RDP"
     - "SSH"
     - "SMB"
+  - id: 18
+    action: "accept"
+    name: "VLAN 12->WAN"
+    nat: disable
+    src_inter: "VLAN12"
+    dest_inter: "wan1"
+    src_addr: 
+    - "VLAN12 address"
+    dest_addr: 
+    - "all"
+    services: 
+    - "ALL"
 
 #To configure an SSL_VPN 
 # SSL_VPN: true

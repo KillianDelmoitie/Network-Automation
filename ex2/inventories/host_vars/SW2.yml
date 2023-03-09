@@ -10,9 +10,9 @@ hostname: SW2
 
 vlans:
   - id: 11
-    name: VLAN9
+    name: VLAN11
   - id: 12
-    name: VLAN10
+    name: VLAN12
   - id: 99
     name: Management
 #Configure trunk interfaces

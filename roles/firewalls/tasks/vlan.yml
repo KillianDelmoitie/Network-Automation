@@ -26,6 +26,7 @@
     vdom: "{{ vdom }}"
     system_dhcp_server:
       id: "{{ item.id }}"
+      dns_service: "default"
       interface: "{{ item.interface }}"
       ip_mode: range
       netmask: "{{ item.netmask }}"
